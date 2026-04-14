@@ -1,0 +1,81 @@
+{
+  "expectation_suite_name": "gold_esg_final_suite",
+  "expectations": [
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": { "column": "iris_code" },
+      "meta": { "notes": "La clé primaire ne peut jamais être NULL" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_unique",
+      "kwargs": { "column": "iris_code" },
+      "meta": { "notes": "Un IRIS = une ligne, pas de doublon" }
+    },
+    {
+      "expectation_type": "expect_table_row_count_to_be_between",
+      "kwargs": { "min_value": 500, "max_value": 60000 },
+      "meta": { "notes": "Plage attendue pour le périmètre d'une Caisse régionale" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "score_esg_0_100",
+        "min_value": 0,
+        "max_value": 100
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "pct_completude",
+        "min_value": 0,
+        "max_value": 100
+      }
+    },
+    {
+      "expectation_type": "expect_column_mean_to_be_between",
+      "kwargs": {
+        "column": "pct_completude",
+        "min_value": 50,
+        "max_value": 100
+      },
+      "meta": { "notes": "Au moins 50% des indicateurs clés renseignés en moyenne" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "taux_pauvrete_60",
+        "min_value": 0,
+        "max_value": 100,
+        "mostly": 0.99
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "taux_chomage_pct",
+        "min_value": 0,
+        "max_value": 100,
+        "mostly": 0.99
+      }
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": { "column": "bv_code" },
+      "meta": { "notes": "Chaque IRIS doit avoir un bassin de vie associé" }
+    },
+    {
+      "expectation_type": "expect_column_values_to_match_regex",
+      "kwargs": {
+        "column": "iris_code",
+        "regex": "^\\d{9}$"
+      },
+      "meta": { "notes": "Le code IRIS doit être exactement 9 chiffres" }
+    }
+  ],
+  "meta": {
+    "great_expectations_version": "0.18.22",
+    "created_by": "data-engineering@banque.fr",
+    "created_date": "2024-11-01"
+  }
+}

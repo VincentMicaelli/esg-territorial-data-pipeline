@@ -1,0 +1,69 @@
+version: 2
+
+sources:
+  - name: bronze
+    schema: bronze
+    description: "Tables brutes chargee directement depuis les sources open data et internes. Aucune transformation."
+    freshness:
+      warn_after: {count: 14, period: day}
+      error_after: {count: 30, period: day}
+    loaded_at_field: null  # Pas de colonne timestamp sur les tables brutes
+
+    tables:
+      - name: raw_filosofi_iris
+        description: "FILOSOFI 2021 brut – Revenus et pauvreté par IRIS (source S01)"
+        columns:
+          - name: iris
+            description: "Code IRIS (peut avoir 8 ou 9 chars – normaliser avec normalize_iris_code)"
+          - name: disp_med21
+            description: "Revenu médian disponible par UC 2021 (peut contenir 's' pour secret)"
+          - name: disp_tp6021
+            description: "Taux de pauvreté au seuil 60% (peut contenir 's')"
+
+      - name: raw_rp_population_iris
+        description: "RP 2022 – Population par IRIS (source S02)"
+        columns:
+          - name: iris
+            description: "Code IRIS"
+          - name: p22_pop
+            description: "Population totale"
+
+      - name: raw_rp_activite_iris
+        description: "RP 2022 – Activité des résidents par IRIS (source S03)"
+
+      - name: raw_rp_logement_iris
+        description: "RP 2022 – Logements par IRIS (source S04)"
+
+      - name: raw_bpe_iris
+        description: "BPE 2024 – Équipements et services géolocalisés (source S05)"
+
+      - name: raw_passoires_energetiques_iris
+        description: "Passoires énergétiques 2022 – Nombre et taux par IRIS (source S09)"
+        columns:
+          - name: district
+            description: "Code IRIS"
+          - name: city
+            description: "Code INSEE commune"
+          - name: nombre
+            description: "Nombre estimé de passoires énergétiques"
+          - name: taux
+            description: "Taux estimé de passoires énergétiques (%)"
+          - name: total
+            description: "Nombre estimé de résidences principales"
+
+      - name: raw_zrr_communes
+        description: "ZRR 2021 – Zones de Revitalisation Rurale par commune (source S11)"
+        columns:
+          - name: codgeo
+            description: "Code INSEE commune (5 chiffres)"
+
+      - name: raw_internal_bv_iris
+        description: "Cartographie interne banque – Association bassins de vie / IRIS (source S12)"
+        columns:
+          - name: code_iris
+            description: "Code IRIS du périmètre banque"
+          - name: code_bv
+            description: "Code bassin de vie associé"
+
+      - name: ingestion_log
+        description: "Journal d'audit de toutes les ingestions Bronze"

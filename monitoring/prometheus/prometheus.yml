@@ -1,0 +1,36 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    environment: 'esg-territorial-prod'
+    team: 'data-engineering'
+
+rule_files:
+  - '/etc/prometheus/alert_rules.yml'
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+
+scrape_configs:
+
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres-exporter:9187']
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'esg_postgres'
+
+  - job_name: 'airflow'
+    metrics_path: '/admin/metrics'
+    static_configs:
+      - targets: ['airflow-webserver:8080']
+    basic_auth:
+      username: 'airflow_admin'
+      password_file: '/etc/prometheus/airflow_password'

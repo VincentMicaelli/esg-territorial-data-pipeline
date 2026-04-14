@@ -1,0 +1,47 @@
+groups:
+  - name: esg_pipeline_alerts
+    interval: 60s
+    rules:
+
+      # Alerte : PostgreSQL ne répond plus
+      - alert: PostgresDown
+        expr: up{job="postgres"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          team: data-engineering
+        annotations:
+          summary: "PostgreSQL ESG inaccessible"
+          description: "Le service PostgreSQL ne répond plus depuis 1 minute."
+
+      # Alerte : taille du disque PostgreSQL > 80%
+      - alert: PostgresDiskUsageHigh
+        expr: >
+          (pg_database_size_bytes{datname="esg_territorial"} / 1073741824) > 50
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Base PostgreSQL ESG > 50 GB"
+          description: "La base esg_territorial dépasse 50 GB. Prévoir extension du volume."
+
+      # Alerte : requête PG longue durée
+      - alert: PostgresLongRunningQuery
+        expr: >
+          pg_stat_activity_max_tx_duration{datname="esg_territorial"} > 600
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Requête PostgreSQL > 10 minutes"
+          description: "Une requête tourne depuis plus de 10 minutes sur esg_territorial."
+
+      # Alerte : Airflow ne répond plus
+      - alert: AirflowDown
+        expr: up{job="airflow"} == 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Airflow ESG inaccessible"
+          description: "Le webserver Airflow ne répond plus."

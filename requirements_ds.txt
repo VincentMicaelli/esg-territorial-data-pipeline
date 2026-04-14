@@ -1,0 +1,18 @@
+# Dépendances Data Scientists (image JupyterHub)
+
+pandas==2.1.4
+numpy==1.26.3
+scikit-learn==1.3.2
+geopandas==0.14.1
+folium==0.15.1        
+matplotlib==3.8.2
+seaborn==0.13.1
+plotly==5.18.0
+sqlalchemy==2.0.23
+psycopg2-binary==2.9.9
+ipywidgets==8.1.1
+pyarrow==14.0.2
+scipy==1.11.4
+statsmodels==0.14.1
+jupyter==1.0.0
+jupyterlab==4.0.10

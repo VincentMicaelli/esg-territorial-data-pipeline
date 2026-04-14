@@ -1,0 +1,47 @@
+name: 'esg_territorial'
+version: '1.0.0'
+config-version: 2
+profile: 'esg_territorial'
+
+model-paths:    ["models"]
+test-paths:     ["tests"]
+macro-paths:    ["macros"]
+analysis-paths: ["analyses"]
+seed-paths:     ["seeds"]
+snapshot-paths: ["snapshots"]
+target-path:    "target"
+packages-install-path: "/home/airflow/.local/dbt_packages"
+clean-targets:  ["target"]
+
+models:
+  esg_territorial:
+    bronze:
+      +schema: bronze
+      +materialized: view
+      +tags: ['bronze']
+    silver:
+      +schema: silver
+      +materialized: table
+      +tags: ['silver']
+      +post-hook:
+        - "GRANT SELECT ON {{ this }} TO ds_user1, ds_user2"
+        - "GRANT SELECT ON {{ this }} TO da_user"
+    gold:
+      +schema: gold
+      +materialized: table
+      +tags: ['gold']
+      +post-hook:
+        - "GRANT SELECT ON {{ this }} TO ds_user1, ds_user2"
+        - "GRANT SELECT ON {{ this }} TO da_user"
+
+on-run-end:
+  - "{% if results %} ANALYZE; {% endif %}"
+
+vars:
+  millesime_filosofi: '2021'
+  millesime_rp_pop:   '2022'
+  millesime_rp_act:   '2022'
+  millesime_rp_log:   '2022'
+  millesime_bpe:      '2024'
+  millesime_passoires: '2022'
+  version_modele:     '1.0'
