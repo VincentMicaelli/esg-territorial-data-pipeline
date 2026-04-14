@@ -6,8 +6,6 @@ Construire un socle de données territorial homogène, auditable et exploitable 
 
 ## Contexte Métier
 
-La banque souhaite mieux comprendre ses territoires pour adapter son développement local, cibler ses actions d'accompagnement et objectiver ses arbitrages stratégiques sur des mailles fines.
-
 Le livrable principal est un dataset final par IRIS, complété d'un agrégat bassin de vie et de la documentation nécessaire à un contrôle Data Management Office.
 
 ## Valeur Démontrée
