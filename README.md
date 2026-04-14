@@ -7,7 +7,7 @@ Socle de données territoriales ESG à la maille IRIS et bassin de vie pour un c
 Le chemin nominal du projet est :
 
 1. copier `.env.example` vers `.env` et ajuster les secrets si nécessaire
-2. copier `cartographie_bassin_vie.csv` vers `./data/`
+2. copier `cartographie_bassin_vie.csv` vers `./data/` (Creer le dossier si non present)
 3. `docker compose up`
 4. attendre la fin de `esg_postgres_init_users` puis du bootstrap Airflow
 5. déclencher `bronze_ingestion_esg_territorial` dans Airflow, ou `make run-bronze`
